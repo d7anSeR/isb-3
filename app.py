@@ -10,6 +10,7 @@ from key_sym import gen_serial_sim_key, enc_text, decrypt_text
 
 class MainWindow(QWidget):
     '''class window with working functionality'''
+
     def __init__(self) -> None:
         '''class constructor'''
         super().__init__()
@@ -45,37 +46,44 @@ class MainWindow(QWidget):
         layout_1 = QVBoxLayout()
         layout_2 = QVBoxLayout()
         layout_3 = QVBoxLayout()
-        layout.addWidget(QLabel("Attention: when you select all the paths, you will be transferred to the encryption process window\n\n\n"))
-        layout_1.addWidget(QLabel("select the path by which the encrypted symmetric key will be serialized\n"))
+        layout.addWidget(QLabel(
+            "Attention: when you select all the paths, you will be transferred to the encryption process window\n\n\n"))
+        layout_1.addWidget(QLabel(
+            "select the path by which the encrypted symmetric key will be serialized\n"))
         file_browse1 = QPushButton('Browse')
         file_browse1.clicked.connect(partial(self.insert_dir, 0))
         self.filename_edit_sim_key = QLineEdit()
-        self.filename_edit_sim_key.setValidator(QDoubleValidator(0.99,99.99,2))    
+        self.filename_edit_sim_key.setValidator(
+            QDoubleValidator(0.99, 99.99, 2))
         layout_1.addWidget(QLabel('Folder:'))
         layout_1.addWidget(self.filename_edit_sim_key)
         layout_1.addWidget(file_browse1)
         layout_1.addSpacing(100)
         layout_gen.addLayout(layout_1)
-        layout_2.addWidget(QLabel("select the path where the public key will be serialized\n"))
+        layout_2.addWidget(
+            QLabel("select the path where the public key will be serialized\n"))
         file_browse2 = QPushButton('Browse')
         file_browse2.clicked.connect(partial(self.insert_dir, 1))
         self.filename_edit_public_key = QLineEdit()
-        self.filename_edit_public_key.setValidator(QDoubleValidator(0.99,99.99,2))
+        self.filename_edit_public_key.setValidator(
+            QDoubleValidator(0.99, 99.99, 2))
         layout_2.addWidget(QLabel('Folder:'))
         layout_2.addWidget(self.filename_edit_public_key)
         layout_2.addWidget(file_browse2)
         layout_2.addSpacing(100)
         layout_gen.addLayout(layout_2)
-        layout_3.addWidget(QLabel("select the path where the private key will be serialized\n"))
+        layout_3.addWidget(
+            QLabel("select the path where the private key will be serialized\n"))
         file_browse3 = QPushButton('Browse')
         file_browse3.clicked.connect(partial(self.insert_dir, 2))
         self.filename_edit_private_key = QLineEdit()
-        self.filename_edit_private_key.setValidator(QDoubleValidator(0.99,99.99,2))
+        self.filename_edit_private_key.setValidator(
+            QDoubleValidator(0.99, 99.99, 2))
         layout_3.addWidget(QLabel('Folder:'))
         layout_3.addWidget(self.filename_edit_private_key)
         layout_3.addWidget(file_browse3)
         layout_3.addSpacing(100)
-        layout_gen.addLayout(layout_3) 
+        layout_gen.addLayout(layout_3)
         layout.addLayout(layout_gen)
         layout_enter = QHBoxLayout()
         self.len_key = QLineEdit()
@@ -91,9 +99,9 @@ class MainWindow(QWidget):
         self.button_gen = QPushButton("generation keys")
         self.button_gen.clicked.connect(self.tmp_fun_gen)
         layout.addWidget(self.button_gen)
-        path_tab1.setLayout(layout)   
+        path_tab1.setLayout(layout)
         return path_tab1
-    
+
     def tmp_fun_gen(self) -> None:
         '''the method calls the key generation functions'''
         if self.flag_gen == True:
@@ -105,17 +113,17 @@ class MainWindow(QWidget):
             error = QMessageBox()
             error.setWindowTitle("Error")
             error.setText("error: you have not chosen all the paths...")
-            error.exec_()   
+            error.exec_()
         elif self.len_k == '\0':
             error = QMessageBox()
             error.setWindowTitle("Error")
             error.setText("error: you didn't input length of key...")
-            error.exec_()   
+            error.exec_()
         else:
             public_key = gen_serial_assym_keys(self.massiv[1], self.massiv[2])
             gen_serial_sim_key(self.massiv[0], public_key, self.len_k)
             self.flag_gen = True
-            self.button_gen.setStyleSheet("background-color : green") 
+            self.button_gen.setStyleSheet("background-color : green")
 
     def encryption(self) -> QWidget:
         '''the method that gets the paths to the source text and to the encrypted one'''
@@ -123,11 +131,12 @@ class MainWindow(QWidget):
         layout_enc = QVBoxLayout()
         layout_text = QVBoxLayout()
         layout_enc_text = QVBoxLayout()
-        layout_text.addWidget(QLabel("Select the path to get text file for encryption"))
+        layout_text.addWidget(
+            QLabel("Select the path to get text file for encryption"))
         file_browse_text = QPushButton('Browse')
         file_browse_text.clicked.connect(self.insert_text)
         self.filename_edit_text = QLineEdit()
-        self.filename_edit_text.setValidator(QDoubleValidator(0.99,99.99,2))
+        self.filename_edit_text.setValidator(QDoubleValidator(0.99, 99.99, 2))
         layout_text.addWidget(QLabel('File:'))
         layout_button_text = QHBoxLayout()
         layout_button_text.addWidget(self.filename_edit_text)
@@ -135,11 +144,13 @@ class MainWindow(QWidget):
         layout_button_text.addSpacing(100)
         layout_text.addLayout(layout_button_text)
         layout_enc.addLayout(layout_text)
-        layout_enc_text.addWidget(QLabel("\nSelect the path to save the encrypted text file"))
+        layout_enc_text.addWidget(
+            QLabel("\nSelect the path to save the encrypted text file"))
         file_browse_enc_text = QPushButton('Browse')
         file_browse_enc_text.clicked.connect(partial(self.insert_dir, 4))
         self.filename_edit_enc_text = QLineEdit()
-        self.filename_edit_enc_text.setValidator(QDoubleValidator(0.99,99.99,2))
+        self.filename_edit_enc_text.setValidator(
+            QDoubleValidator(0.99, 99.99, 2))
         layout_enc_text.addWidget(QLabel('Folder:'))
         layout_button_enc = QHBoxLayout()
         layout_button_enc.addWidget(self.filename_edit_enc_text)
@@ -150,9 +161,9 @@ class MainWindow(QWidget):
         self.button_enc.clicked.connect(self.tmp_fun_enc)
         layout_enc.addLayout(layout_enc_text)
         layout_enc.addWidget(self.button_enc)
-        path_tab2.setLayout(layout_enc)      
+        path_tab2.setLayout(layout_enc)
         return path_tab2
-    
+
     def tmp_fun_enc(self) -> None:
         '''the method that calls text encryption functions'''
         if self.massiv[3] == '\0' or self.massiv[4] == '\0':
@@ -174,10 +185,11 @@ class MainWindow(QWidget):
             error = QMessageBox()
             error.setWindowTitle("Error")
             error.setText("error: you didn't input length of key...")
-            error.exec_() 
+            error.exec_()
         else:
             self.flag_enc = True
-            enc_text(str(self.massiv[4]), str(self.massiv[3]), deserial_key_and_dec(self.massiv[0], self.massiv[2]))
+            enc_text(str(self.massiv[4]), str(self.massiv[3]), deserial_key_and_dec(
+                self.massiv[0], self.massiv[2]))
             self.button_enc.setStyleSheet("background-color : green")
 
     def decryption(self) -> QWidget:
@@ -185,11 +197,13 @@ class MainWindow(QWidget):
         path_tab_dec = QWidget()
         layout_dec = QVBoxLayout()
         layout = QVBoxLayout()
-        layout_dec.addWidget(QLabel("Select the path where the decrypted test will be saved\n"))
+        layout_dec.addWidget(
+            QLabel("Select the path where the decrypted test will be saved\n"))
         file_browse = QPushButton('Browse')
         file_browse.clicked.connect(partial(self.insert_dir, 5))
         self.filename_edit_dec_text = QLineEdit()
-        self.filename_edit_dec_text.setValidator(QDoubleValidator(0.99,99.99,2))
+        self.filename_edit_dec_text.setValidator(
+            QDoubleValidator(0.99, 99.99, 2))
         layout.addWidget(QLabel('Folder:'))
         layout_button_dec = QHBoxLayout()
         layout_button_dec.addWidget(self.filename_edit_dec_text)
@@ -199,9 +213,9 @@ class MainWindow(QWidget):
         self.button_dec.clicked.connect(self.tmp_fun_dec)
         layout.addWidget(self.button_dec)
         layout_dec.addLayout(layout)
-        path_tab_dec.setLayout(layout_dec)           
+        path_tab_dec.setLayout(layout_dec)
         return path_tab_dec
-    
+
     def len_key_fun(self) -> None:
         '''the method that checks the input length for the key'''
         flag = False
@@ -211,11 +225,11 @@ class MainWindow(QWidget):
                 flag = True
                 self.button_enter.setStyleSheet("background-color : green")
             elif i == 448 and flag == False:
-               error = QMessageBox()
-               error.setWindowTitle("Error")
-               error.setText("error: you entered an incorrect value...")
-               self.button_enter.setStyleSheet("background-color : white")
-               error.exec_() 
+                error = QMessageBox()
+                error.setWindowTitle("Error")
+                error.setText("error: you entered an incorrect value...")
+                self.button_enter.setStyleSheet("background-color : white")
+                error.exec_()
 
     def tmp_fun_dec(self) -> None:
         '''the method that calls decryption functions for text'''
@@ -243,17 +257,18 @@ class MainWindow(QWidget):
             error = QMessageBox()
             error.setWindowTitle("Error")
             error.setText("error: you didn't input length of key...")
-            error.exec_() 
+            error.exec_()
         else:
             self.button_dec.setStyleSheet("background-color : green")
-            decrypt_text(self.massiv[5], self.massiv[4], deserial_key_and_dec(self.massiv[0], self.massiv[2]))
-            self.flag_dec = True        
+            decrypt_text(self.massiv[5], self.massiv[4], deserial_key_and_dec(
+                self.massiv[0], self.massiv[2]))
+            self.flag_dec = True
 
     def insert_text(self) -> None:
         '''the method that gets the path to the original file'''
         flag = True
         name = QFileDialog.getOpenFileName(self)
-        if  (os.path.splitext(name[0]))[1] != ".txt":
+        if (os.path.splitext(name[0]))[1] != ".txt":
             error = QMessageBox()
             error.setWindowTitle("Error")
             error.setText("error when selecting a file")
