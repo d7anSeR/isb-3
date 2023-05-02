@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 
 def gen_serial_assym_keys(path_public_key: str, path_private_key: str) -> rsa.RSAPublicKey:
-    '''generation and implementation of asymmetric keys'''
+    """generation and implementation of asymmetric keys"""
     try:
         keys = rsa.generate_private_key(
             public_exponent=65537,
@@ -29,7 +29,7 @@ def gen_serial_assym_keys(path_public_key: str, path_private_key: str) -> rsa.RS
 
 
 def deserial_key_and_dec(path_sym: str, path_private: str) -> bytes:
-    '''deserialization of asymmetric keys'''
+    """deserialization of asymmetric keys"""
     dc_text = ''
     d_private_key = 0
     try:
